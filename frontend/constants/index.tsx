@@ -99,13 +99,6 @@ export const TaskFormData: TaskFormDataItem[] = [
     name: "description",
     label: "Task Description",
   },
-  {
-    id: 24,
-    type: "text",
-    placeholder: "Task status",
-    name: "status",
-    label: "Task Status",
-  },
 ];
 
 // --------------------------- form Data List End --------------------

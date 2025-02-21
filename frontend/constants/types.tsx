@@ -50,7 +50,6 @@ export type RegisterFormDataItem = {
 
 export type TaskFormValueType = {
   title: string;
-  status: string;
   description: string;
 };
 export type TaskFormDataItem = {

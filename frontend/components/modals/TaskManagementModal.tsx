@@ -3,14 +3,21 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { slideRight } from "@/constants/framer";
 import { offTaskModal } from "@/redux/slices/modalSlice";
-
-// import {
-//   Select,
-//   SelectContent,
-//   SelectItem,
-//   SelectTrigger,
-//   SelectValue,
-// } from "@/components/ui/select";
+import { Calendar } from "@/components/ui/calendar";
+import { format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import toast from "react-hot-toast";
 import { X } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
@@ -28,6 +35,7 @@ const TaskManagementModal = () => {
     description: "",
     title: "",
     status: "",
+    due_date: new Date(),
   });
   const { isTaskModalOpen, taskId } = useSelector((state: any) => state.modal);
 
@@ -170,7 +178,7 @@ const TaskManagementModal = () => {
               );
             })}
             <div className="w-full grid grid-cols-2 gap-4">
-              {/* <div className="w-full flex flex-col gap-2 text-base">
+              <div className="w-full flex flex-col gap-2 text-base">
                 <span>Task Status</span>
                 <Select onValueChange={onSelectChange}>
                   <SelectTrigger className="w-full h-[45px]">
@@ -184,7 +192,41 @@ const TaskManagementModal = () => {
                     <SelectItem value="completed">Completed</SelectItem>
                   </SelectContent>
                 </Select>
-              </div> */}
+              </div>
+
+              <Popover>
+                <PopoverTrigger asChild>
+                  <div className="w-full flex flex-col gap-1">
+                    <span>Task Due Date</span>
+
+                    <div
+                      variant={"outline"}
+                      className={cn(
+                        "w-[240px] pl-3 text-left font-normal",
+                        !field.value && "text-muted-foreground"
+                      )}
+                    >
+                      {field.value ? (
+                        format(field.value, "PPP")
+                      ) : (
+                        <span>Pick a date</span>
+                      )}
+                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                    </div>
+                  </div>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={field.value}
+                    onSelect={field.onChange}
+                    disabled={(date) =>
+                      date > new Date() || date < new Date("1900-01-01")
+                    }
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
             </div>
           </div>
         </div>
