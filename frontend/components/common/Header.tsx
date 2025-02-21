@@ -10,39 +10,27 @@ const Header = () => {
   const { currentUser } = useSelector((store: { auth?: any }) => store.auth);
   // console.log(currentUser);
   return (
-    <div className="w-full py-4 bg-transparent">
-      <div className="w-full px-6 md:w-[90%] max-w-custom mx-auto border bg-[#FFFFFF] rounded-full py-4 min-h-[55px] flex items-center justify-between">
+    <div className="w-full py-4 sticky z-[100] top-0 bg-transparent">
+      <div
+        style={{ backdropFilter: "blur(24px)" }}
+        className="w-full px-6 md:w-[90%] max-w-custom mx-auto border bg-[#ffffffab] rounded-full py-4 min-h-[55px] flex items-center justify-between"
+      >
         <div className="flex items-center gap-8 lg:gap-12">
-          <Link
-            href={"/"}
-            className="text-lg lg:text-2xl text-[var(--dark-1)]"
-          >
+          <Link href={"/"} className="text-lg lg:text-2xl text-[var(--dark-1)]">
             RayTaskify
           </Link>
         </div>
         <div className="hidden lg:flex flex-1 justify-center items-center gap-12">
-          <Link
-            href={"#"}
-            className="text-lg text-[var(--dark-1)] font-normal"
-          >
+          <Link href={"#"} className="text-lg text-[var(--dark-1)] font-normal">
             Features
           </Link>
-          <Link
-            href={"#"}
-            className="text-lg text-[var(--dark-1)] font-normal"
-          >
+          <Link href={"#"} className="text-lg text-[var(--dark-1)] font-normal">
             App
           </Link>
-          <Link
-            href={"#"}
-            className="text-lg text-[var(--dark-1)] font-normal"
-          >
+          <Link href={"#"} className="text-lg text-[var(--dark-1)] font-normal">
             Pricing
           </Link>
-          <Link
-            href={"#"}
-            className="text-lg text-[var(--dark-1)] font-normal"
-          >
+          <Link href={"#"} className="text-lg text-[var(--dark-1)] font-normal">
             Integration
           </Link>
         </div>
@@ -50,10 +38,7 @@ const Header = () => {
           <div className="flex items-center justify-end">
             {currentUser ? (
               <div className="flex items-center justify-end gap-2 md:gap-4">
-                <Link
-                  href={"/dashboard"}
-                  className="btn bg-[#3e3aff] shadows"
-                >
+                <Link href={"/dashboard"} className="btn bg-[#3e3aff] shadows">
                   Go to Dashboard
                 </Link>
 

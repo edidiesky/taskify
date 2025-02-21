@@ -6,7 +6,7 @@ import React from "react";
 
 function page() {
   return (
-    <div className="w-full p-12 flex flex-col gap-12">
+    <div className="w-full p-8 lg:p-12 flex flex-col gap-12">
       <DashboardHomeTop/>
       <TaskList/>
     </div>

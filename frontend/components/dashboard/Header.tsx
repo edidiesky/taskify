@@ -10,8 +10,11 @@ const Header = () => {
   const { currentUser } = useSelector((store: { auth?: any }) => store.auth);
   // console.log(currentUser);
   return (
-    <div className="w-full py-4 bg-transparent">
-      <div className="w-full mx-auto border px-5 bg-[#FFFFFF] rounded-full py-4 min-h-[75px] flex items-center justify-between">
+    <div className="w-full  sticky top-0 z-[100] py-4 bg-transparent">
+      <div
+        style={{ backdropFilter: "blur(24px)" }}
+        className="w-full mx-auto border px-5 bg-[#ffffffe3] rounded-full py-4 min-h-[75px] flex items-center justify-between"
+      >
         <div className="flex items-center gap-8 lg:gap-12">
           <Link href={"/"} className="text-lg lg:text-2xl text-[var(--dark-1)]">
             RayTaskify
@@ -31,8 +34,6 @@ const Header = () => {
         <div className="flex items-center justify-end gap-8 md:gap-12">
           <div className="flex items-center justify-end">
             <div className="flex items-center justify-end gap-2 md:gap-4">
-             
-
               <UserProfile />
             </div>
           </div>

@@ -20,53 +20,21 @@ export const userApiSlice = apiSlice.injectEndpoints({
       }),
     }),
     logout: builder.mutation({
-      query: (data) => ({
-        method: "POST",
-        body: data,
-        url: `${AUTH_URL}/logout`,
-      }),
-    }),
-    getAllUser: builder.query({
-      query: (data) => ({
-        method: "GET",
-        body: data,
-        credentials: "include",
-        url: `${USERS_URL}`,
-      }),
-    }),
-    getSingleUser: builder.query({
-      query: (data) => ({
-        method: "GET",
-        body: data,
-        credentials: "include",
-        url: `${USERS_URL}/${data?.id}`,
-      }),
-    }),
-    adminDeleteUser: builder.mutation({
-      query: (data) => ({
-        method: "DELETE",
-        body: data,
-        credentials: "include",
-        url: `${USERS_URL}/${data?.id}`,
-      }),
-    }),
-    adminUpdateUser: builder.mutation({
-      query: (data) => ({
-        method: "PUT",
-        body: data,
-        credentials: "include",
-        url: `${USERS_URL}/${data?.id}`,
-      }),
+      query: (data) => {
+        const token = localStorage.getItem("token")?.replace(/"/g, "");
+        return {
+          method: "POST",
+          body: data,
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          url: `${AUTH_URL}/logout`,
+        };
+      },
     }),
   }),
 });
 
-export const {
-  useLoginMutation,
-  useLogoutMutation,
-  useRegisterMutation,
-  useGetAllUserQuery,
-  useGetSingleUserQuery,
-  useAdminUpdateUserMutation,
-  useAdminDeleteUserMutation,
-} = userApiSlice;
+export const { useLoginMutation, useLogoutMutation, useRegisterMutation } =
+  userApiSlice;
