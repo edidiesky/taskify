@@ -1,22 +1,33 @@
-# Building the base for taskify
-FROM node:18-alpine AS base
-WORKDIR /app
-COPY src ./app
-COPY package*.json composer*.json
+# Use official PHP image with necessary extensions
+FROM php:8.2-fpm
 
-RUN npm install
+# Set working directory
+WORKDIR /var/www
 
-# Ccarrying out the 2nd build to resduce the image size
-FROM node:18-alpine AS production
-WORKDIR /app
-COPY src ./app
-COPY package*.json composer*.json
-COPY --from=base /app/src ./
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    unzip \
+    git \
+    curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    && docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd
 
-RUN npm install --only=production
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-CMD [ "php", "artisan", "serve" ]
+# Copy application files
+COPY . .
 
+# Install Laravel dependencies
+RUN composer install --no-dev --optimize-autoloader
 
+# Set permissions
+RUN chmod -R 777 storage bootstrap/cache
 
+# Expose port
+EXPOSE 8000
 
+# Running Laravel server
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]

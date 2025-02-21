@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_ENV=production
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_DATABASE=taskify
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+    depends_on:
+      - mysql
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+  mysql:
+    image: mysql:8
+    restart: always
+    environment:
+      MYSQL_DATABASE: taskify
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
