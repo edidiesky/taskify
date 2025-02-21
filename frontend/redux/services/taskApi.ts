@@ -61,7 +61,7 @@ export const TaskApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ["Task"],
     }),
     deleteTask: builder.mutation({
-      query: (data) => {
+      query: (taskId) => {
         const token = localStorage.getItem("token")?.replace(/"/g, "");
         return {
           method: "DELETE",
@@ -69,9 +69,11 @@ export const TaskApiSlice = apiSlice.injectEndpoints({
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
-          url: `${TASK_URL}/${data?.id}`,
+          url: `${TASK_URL}/${taskId}`,
         };
       },
+      invalidatesTags: ["Task"],
+
     }),
   }),
 });

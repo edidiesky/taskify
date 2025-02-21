@@ -3,7 +3,7 @@ const initialState = {
   savedRooms: [],
   loginmodal: false,
   registermodal: false,
-  deleteTaskmodal: false,
+  isdeleteTaskmodal: false,
   isTaskModalOpen: false,
   workspaceid: null,
   workspaceUserid: null,
@@ -30,11 +30,13 @@ export const modalSlice = createSlice({
       document.body.classList.remove("modal-open");
     },
 
-    onDeleteTaskModal: (state, _action) => {
-      state.deleteTaskmodal = true;
+    onDeleteTaskModal: (state, action) => {
+      state.isdeleteTaskmodal = true;
+      state.taskId = action.payload;
     },
     offDeleteTaskModal: (state, _action) => {
-      state.deleteTaskmodal = false;
+      state.isdeleteTaskmodal = false;
+      state.taskId = null;
     },
 
     onTaskModal: (state, action) => {

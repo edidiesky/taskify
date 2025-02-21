@@ -3,18 +3,29 @@ import { FiEdit2, FiTrash2 } from "react-icons/fi";
 import { AnimatePresence } from "framer-motion";
 import { useSelector, useDispatch } from "react-redux";
 import TaskManagementModal from "@/components/modals/TaskManagementModal";
-import { onTaskModal } from "@/redux/slices/modalSlice";
+import { onTaskModal, onDeleteTaskModal } from "@/redux/slices/modalSlice";
+import { DeleteConfirmationModal } from "@/components/modals/DeleteConfirmationModal";
 
+//  Functional component for the table list
 export default function TableList({ tableData }: { tableData: any }) {
   // console.log("tableData", tableData);
   const dispatch = useDispatch();
 
-  const { isTaskModalOpen } = useSelector((state: any) => state.modal);
+  const { isTaskModalOpen, isdeleteTaskmodal } = useSelector(
+    (state: any) => state.modal
+  );
 
   return (
     <>
+      {/* animating the task management modal */}
+
       <AnimatePresence mode="wait">
         {isTaskModalOpen && <TaskManagementModal />}
+      </AnimatePresence>
+
+      {/* animating the delete confirmation modal */}
+      <AnimatePresence mode="wait">
+        {isdeleteTaskmodal && <DeleteConfirmationModal />}
       </AnimatePresence>
       <tr
         className={`hover:bg-gray-100 bg-[#f2f2f2] cursor-pointer transition-colors`}
@@ -51,13 +62,9 @@ export default function TableList({ tableData }: { tableData: any }) {
             </button>
             <button
               className="text-red-600 hover:text-red-900 p-3 rounded-full hover:bg-red-50 transition-colors"
-              // onClick={(e) => {
-              //   setDeleteModal({
-              //     isOpen: true,
-              //     userId: tableData?.id,
-              //     userName: tableData?.name,
-              //   });
-              // }}
+              onClick={() => {
+                dispatch(onDeleteTaskModal(tableData?.id));
+              }}
               aria-label="Delete tableData"
             >
               <FiTrash2 className="w-4 h-4" />

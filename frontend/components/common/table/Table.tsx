@@ -1,6 +1,4 @@
 "use client";
-
-import { useState } from "react";
 import TableList from "./TableList";
 
 const DEFAULT_HEADERS = ["ID", "Title", "Status", "Description", "Actions"];

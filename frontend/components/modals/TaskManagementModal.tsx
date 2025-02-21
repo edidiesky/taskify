@@ -21,7 +21,6 @@ import {
   useGetSingleTaskQuery,
   useUpdateTaskMutation,
 } from "@/redux/services/taskApi";
-import { apiSlice } from "@/redux/services/apiSlice";
 const TaskManagementModal = () => {
   const dispatch = useDispatch();
 
@@ -54,14 +53,8 @@ const TaskManagementModal = () => {
     }
   }, [taskDetail, setFormValue]);
 
-  const [
-    createTask,
-    {
-      isLoading: createTaskIsLoading,
-      data: currentTask,
-      isSuccess: createTaskIsSuccess,
-    },
-  ] = useCreateTaskMutation();
+  const [createTask, { isLoading: createTaskIsLoading }] =
+    useCreateTaskMutation();
 
   const [
     updateTask,
@@ -86,7 +79,7 @@ const TaskManagementModal = () => {
     e.preventDefault();
     try {
       await updateTask(formvalue).unwrap();
-      toast.success("Task Created succesfully!!");
+      toast.success("Task Updated succesfully!!");
       dispatch(offTaskModal(""));
     } catch (err: any) {
       toast.error(err?.data?.message || err.error);
