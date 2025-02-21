@@ -11,15 +11,6 @@ Taskify is a full-stack task management application built with Laravel (backend)
 
 ---
 
-## Prerequisites
-Ensure you have the following installed:
-- [Docker](https://www.docker.com/get-started)
-- [Docker Compose](https://docs.docker.com/compose/install/)
-- [Node.js](https://nodejs.org/en) (For frontend development)
-- [Composer](https://getcomposer.org/download/) (For Laravel dependencies)
-
----
-
 ## Project Structure
 ```
 /taskify
@@ -32,7 +23,7 @@ Ensure you have the following installed:
 ---
 
 ## Backend Setup (Laravel)
-### 1️⃣ Environment Configuration
+###  Environment Configuration
 Create a `.env` file in the `backend/` folder and configure your database:
 ```ini
 APP_NAME=Taskify
@@ -52,7 +43,7 @@ SANCTUM_STATEFUL_DOMAINS=localhost:3000
 SESSION_DOMAIN=localhost
 ```
 
-### 2️⃣ Run the Application with Docker
+### Run the Application with Docker
 Navigate to the project root and run:
 ```sh
 docker-compose up --build
@@ -62,7 +53,7 @@ This will:
 - Laravel API will be available at `http://localhost:8000`
 - Frontend will be available at `http://localhost:3000`
 
-### 3️⃣ Run Migrations & Seed Database
+### Run Migrations & Seed Database
 Open a terminal in the backend container and run:
 ```sh
 docker exec -it <backend_container_id> bash
@@ -72,13 +63,13 @@ php artisan migrate --seed
 ---
 
 ## Frontend Setup (Next.js)
-### 1️⃣ Environment Configuration
+###  Environment Configuration
 Create a `.env.local` file in the `frontend/` folder:
 ```ini
 NEXT_PUBLIC_API_URL=http://localhost:8000/api
 ```
 
-### 2️⃣ Start the Development Server
+### Start the Development Server
 ```sh
 cd frontend
 npm install --legacy-peer-deps
@@ -118,12 +109,12 @@ Now, open `http://localhost:3000` to see the application.
 ---
 
 ## Troubleshooting
-### 1️⃣ If Laravel API is not responding
+###  If Laravel API is not responding
 - Check logs with: `docker logs <backend_container_id>`
 - Make sure `.env` variables are correct.
 - Restart containers: `docker-compose restart`
 
-### 2️⃣ If Next.js Frontend Fails to Fetch Data
+### If Next.js Frontend Fails to Fetch Data
 - Ensure `NEXT_PUBLIC_API_URL` is correct.
 - Try clearing cache: `rm -rf .next && npm run dev`
 
