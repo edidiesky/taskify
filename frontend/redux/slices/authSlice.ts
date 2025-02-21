@@ -16,6 +16,7 @@ const getUserData = () => {
 
 const initialState = {
   currentUser: getUserData(),
+  token:null,
 };
 export const authSlice = createSlice({
   name: "auth",
@@ -26,9 +27,12 @@ export const authSlice = createSlice({
       localStorage.removeItem("customer");
     },
     setUserCredentials: (state, action) => {
-      state.currentUser = action.payload.user;
+      const userPayload = action.payload.user
+      state.currentUser = userPayload?.user;
+      state.currentUser = userPayload?.token
       // console.log(action.payload)
-      localStorage.setItem("customer", JSON.stringify(action.payload.user));
+      localStorage.setItem("customer", JSON.stringify(userPayload?.user));
+      localStorage.setItem("token", JSON.stringify(userPayload?.token));
     },
   },
 });

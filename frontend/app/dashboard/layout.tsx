@@ -1,6 +1,6 @@
 import Header from "@/components/dashboard/Header";
 
-export default function RootLayout({
+function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -14,3 +14,5 @@ export default function RootLayout({
     </div>
   );
 }
+
+export default RootLayout;

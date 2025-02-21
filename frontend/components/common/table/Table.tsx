@@ -4,10 +4,10 @@ import { AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import TableList from "./TableList";
 
-const DEFAULT_HEADERS = ["User Info", "Location", "Phone", "Status", "Actions"];
+const DEFAULT_HEADERS = ["ID", "Title", "Status", "Description", "Actions"];
 
 type UserTableType = {
-  headers: string[];
+  headers?: string[];
   data: {
     title: string;
     price: number;
@@ -74,24 +74,26 @@ export const Table = ({
         <div className="flex-1">
           <input
             type="text"
-            placeholder="Search on your store!"
+            placeholder="Search for your tasks!"
             className="w-32 lg:w-56 px-4 h-[40px] bg-[#f1f1f1] border rounded-xl font-work_font font-normal text-sm"
           />
         </div>
         <table className="w-full divide-y overflow-auto divide-gray-200">
           {/* bg-[#E8E8E3] */}
-          <thead className=" ">
+          <thead className="w-full">
             <tr>
-              {headers.map((header, index) => (
-                <th
-                  key={index}
-                  scope="col"
-                  className="px-4  py-4 text-left text-sm font-work_font font-normal text-[#777] capitalize tracking-wider cursor-pointer"
-                  onClick={() => handleSort(header.toLowerCase())}
-                >
-                  <div className="flex items-center">{header}</div>
-                </th>
-              ))}
+              {headers.map((header, index) => {
+                return (
+                  <th
+                    key={index}
+                    scope="col"
+                    className="px-4  py-4 text-left text-sm  font-normal text-[#777] capitalize tracking-wider cursor-pointer"
+                    onClick={() => handleSort(header.toLowerCase())}
+                  >
+                    <div className="flex items-center">{header}</div>
+                  </th>
+                );
+              })}
             </tr>
           </thead>
           <tbody className="text-sm divide-y divide-gray-200">

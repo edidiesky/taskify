@@ -4,34 +4,71 @@ import { apiSlice } from "./apiSlice";
 export const TaskApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     createTask: builder.mutation({
-      query: ({ storeid, ...formdata }) => ({
-        method: "POST",
-        body: formdata,
-        credentials: "include",
-        url: `${TASK_URL}/${storeid}`,
-      }),
+      query: ({ storeid, ...formdata }) => {
+        const token = localStorage.getItem("token")?.replace(/"/g, '')
+        return {
+          method: "POST",
+          body: formdata,
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          url: `${TASK_URL}/${storeid}`,
+        };
+      },
+    }),
+    getAllTask: builder.query({
+      query: (_data) => {
+        const token = localStorage.getItem("token")?.replace(/"/g, '')
+        return {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          url: `${TASK_URL}`,
+        };
+      },
     }),
     getSingleTask: builder.query({
-      query: (data) => ({
-        method: "GET",
-        credentials: "include",
-        url: `${TASK_URL}/${data?.id}`,
-      }),
+      query: (data) => {
+        const token = localStorage.getItem("token")?.replace(/"/g, '')
+        return {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          url: `${TASK_URL}/${data?.id}`,
+        };
+      },
     }),
     updateTask: builder.mutation({
-      query: (data) => ({
-        method: "PUT",
-        body: data,
-        credentials: "include",
-        url: `${TASK_URL}/${data?.id}`,
-      }),
+      query: (data) => {
+        const token = localStorage.getItem("token")?.replace(/"/g, '')
+        return {
+          method: "PUT",
+          body: data,
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          url: `${TASK_URL}/${data?.id}`,
+        };
+      },
     }),
     deleteTask: builder.mutation({
-      query: (data) => ({
-        method: "DELETE",
-        credentials: "include",
-        url: `${TASK_URL}/${data?.id}`,
-      }),
+      query: (data) => {
+        const token = localStorage.getItem("token")?.replace(/"/g, '')
+        return {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          url: `${TASK_URL}/${data?.id}`,
+        };
+      },
     }),
   }),
 });
@@ -40,5 +77,6 @@ export const {
   useDeleteTaskMutation,
   useUpdateTaskMutation,
   useGetSingleTaskQuery,
+  useGetAllTaskQuery,
   useCreateTaskMutation,
 } = TaskApiSlice;

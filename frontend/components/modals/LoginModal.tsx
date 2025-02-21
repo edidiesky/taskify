@@ -50,8 +50,10 @@ const LoginModal = () => {
 
   useEffect(() => {
     if (currentUser) {
-      const timer = setTimeout(() => router.push(`/dashboard`), 200);
-      dispatch(offLoginModal(""));
+      const timer = setTimeout(() => {
+        router.push(`/dashboard`);
+        dispatch(offLoginModal(""));
+      }, 300);
       return () => clearTimeout(timer);
     }
   }, [currentUser, router, dispatch]);

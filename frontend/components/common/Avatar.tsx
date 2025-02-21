@@ -48,12 +48,12 @@ const UserProfile = () => {
                     onClick={() => setActive(!active)}
                     className="w-12 h-12 flex items-center text-[#fff] justify-center text-xl rounded-full bg-[#A1718A]"
                   >
-                    {currentUser?.fullname?.slice("")[0]}
+                    {currentUser?.name?.slice("")[0]}
                   </div>
                 )}
               </div>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-[270px] -translate-x-7 border bg-white">
+            <DropdownMenuContent className="w-[230px] -translate-x-7 border bg-white">
               <div className="w-full flex flex-col gap-4">
                 <div className="flex w-full relative py-3 border-b px-4 items-center gap-4 cursor-pointer">
                   <img
@@ -65,15 +65,15 @@ const UserProfile = () => {
                     className="w-12 h-12 object-cover rounded-full"
                     alt="Avatar for user"
                   />
-                  <span className="text-base font-selleasy_regular">
-                    {currentUser?.fullname}
-                    <span className="block font-normal font-work_font text-xs text-dark">
+                  <span className="text-base lg:text-lg">
+                    {currentUser?.name}
+                    <span className="block font-normal text-sm lg:text-sm text-[#777]">
                       My Account
                     </span>
                   </span>
                 </div>
                 <div className="flex flex-col gap-3">
-                  <div className="w-full font-work_font flex flex-col pb-3 border-b">
+                  <div className="w-full flex flex-col pb-3 border-b">
                     <Link
                       href={`/dashboard`}
                       className="text-sm block font-normal px-4 py-2 hover:bg-[#fafafa] text-[#000]"
@@ -92,7 +92,7 @@ const UserProfile = () => {
 
                 <div
                   onClick={handleLogOut}
-                  className="w-full hover:bg-[#fafafa] cursor-pointer font-work_font text-center py-2 font-semibold text-[#d02828ed]"
+                  className="w-full hover:bg-[#fafafa] cursor-pointer text-center py-2 font-semibold text-[#d02828ed]"
                 >
                   Sign Out
                 </div>
