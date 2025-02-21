@@ -20,8 +20,8 @@ const LoginModal = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const [formValue, setFormValue] = useState({
-    password: "StrongPass@123",
-    email: "johndoe@gmail.com",
+    password: "",
+    email: "",
   });
   const [login, { isLoading, data: currentUser, isSuccess: loginIsSuccess }] =
     useLoginMutation();
@@ -50,10 +50,7 @@ const LoginModal = () => {
 
   useEffect(() => {
     if (currentUser) {
-      const timer = setTimeout(
-        () => router.push(`/dashboard`),
-        200
-      );
+      const timer = setTimeout(() => router.push(`/dashboard`), 200);
       dispatch(offLoginModal(""));
       return () => clearTimeout(timer);
     }
@@ -79,9 +76,9 @@ const LoginModal = () => {
           <div className="w-full flex flex-col justify-center gap-4 py-16 md:py-12 px-10">
             <div className="w-full flex flex-col gap-1">
               <h3 className="text-2xl capitalize md:text-3xl">
-                Sign in & take <br />  control  of your Tasks!
+                Sign in & take <br /> control of your Tasks!
               </h3>
-              <span className="block text-base md:text-base font-work_font max-w-[250px] pt-1">
+              <span className="block text-base md:text-base text-[#777] font-work_font max-w-[250px] pt-1">
                 Your business, your task - one login away!
               </span>
             </div>

@@ -7,7 +7,7 @@ const Hero = () => {
   const { currentUser } = useSelector((store: { auth?: any }) => store.auth);
 
   return (
-    <div className="min-h-[550px]  py-12 lg:py-24 flex items-center gap-8 justify-center">
+    <div className="min-h-[100vh] py-12 lg:py-24 flex items-center gap-8 justify-center">
       <div className="max-w-custom mx-auto overflow-hidden w-[90%] grid grid-cols-1 gap-8 lg:gap-16">
         <div className="w-full flex lg:items-center lg:justify-center flex-col gap-10">
           <h2
