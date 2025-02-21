@@ -81,7 +81,7 @@ NEXT_PUBLIC_API_URL=http://localhost:8000/api
 ### 2️⃣ Start the Development Server
 ```sh
 cd frontend
-npm install
+npm install --legacy-peer-deps
 npm run dev
 ```
 Now, open `http://localhost:3000` to see the application.
