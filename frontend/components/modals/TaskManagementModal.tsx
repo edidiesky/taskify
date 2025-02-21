@@ -1,0 +1,203 @@
+"use client";
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { slideRight } from "@/constants/framer";
+import { offTaskModal } from "@/redux/slices/modalSlice";
+
+// import {
+//   Select,
+//   SelectContent,
+//   SelectItem,
+//   SelectTrigger,
+//   SelectValue,
+// } from "@/components/ui/select";
+import toast from "react-hot-toast";
+import { X } from "lucide-react";
+import { useSelector, useDispatch } from "react-redux";
+import { TaskFormData } from "@/constants";
+import {
+  useCreateTaskMutation,
+  useGetAllTaskQuery,
+  useGetSingleTaskQuery,
+  useUpdateTaskMutation,
+} from "@/redux/services/taskApi";
+import { apiSlice } from "@/redux/services/apiSlice";
+const TaskManagementModal = () => {
+  const dispatch = useDispatch();
+
+  const [formvalue, setFormValue] = useState({
+    description: "",
+    title: "",
+    status: "",
+  });
+  const { isTaskModalOpen, taskId } = useSelector((state: any) => state.modal);
+
+  const onChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormValue((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const onSelectChange = (value: any) => {
+    setFormValue((prev) => ({ ...prev, taskCategory: value }));
+  };
+
+  const { data: taskDetail, isLoading } = useGetSingleTaskQuery(taskId, {
+    skip: !taskId,
+  });
+  useEffect(() => {
+    if (taskDetail) {
+      setFormValue({
+        ...taskDetail,
+      });
+    }
+  }, [taskDetail, setFormValue]);
+
+  const [
+    createTask,
+    {
+      isLoading: createTaskIsLoading,
+      data: currentTask,
+      isSuccess: createTaskIsSuccess,
+    },
+  ] = useCreateTaskMutation();
+
+  const [
+    updateTask,
+    { isLoading: updateTaskIsLoading, isSuccess: updateTaskIsSuccess },
+  ] = useUpdateTaskMutation();
+
+  // Handler for creating a Task
+  const handleCreateTask = async (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    try {
+      await createTask(formvalue).unwrap();
+      toast.success("Task Created succesfully!!");
+      dispatch(offTaskModal(""));
+    } catch (err: any) {
+      toast.error(err?.data?.message || err.error);
+    }
+  };
+
+  // Handler for updating a Task
+
+  const handleUpdateTask = async (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    try {
+      await updateTask(formvalue).unwrap();
+      toast.success("Task Created succesfully!!");
+      dispatch(offTaskModal(""));
+    } catch (err: any) {
+      toast.error(err?.data?.message || err.error);
+    }
+  };
+
+  // console.log("taskDetail", taskDetail);
+  // console.log("formvalue", formvalue);
+  // console.log("taskId", taskId)
+  return (
+    <div className="fixed inset-0 bg-[rgba(0,0,0,.3)] flex items-center justify-end z-50 p-4">
+      <motion.div
+        variants={slideRight}
+        initial="initial"
+        animate={isTaskModalOpen ? "enter" : "exit"}
+        exit={"exit"}
+        className="bg-[#fff] w-full rounded-xl border relative flex flex-col gap-8 lg:w-[550px] h-[95vh]"
+      >
+        {/* Header */}
+        <div className="border-b w-full flex flex-col gap-8 p-4 px-4">
+          <div className="flex justify-between items-center w-full">
+            <div className="flex gap-2 items-center">
+              <button
+                onClick={() => dispatch(offTaskModal(""))}
+                className="w-10 h-10 rounded-full flex items-center justify-center text-base hover:bg-[#fafafa]"
+                aria-label="Close modal"
+              >
+                <X size={16} />
+              </button>
+              <h4 className="text-xl font-nueubig"> Manage Task</h4>
+            </div>
+            <div className="flex items-center gap-4 justify-end">
+              {/* 6067FA */}
+              <button
+                aria-label="Close modal"
+                onClick={() => dispatch(offTaskModal(""))}
+                className="px-4 py-3 border text-sm rounded-lg"
+              >
+                Cancel
+              </button>
+              <button
+                disabled={createTaskIsLoading || updateTaskIsLoading}
+                onClick={taskDetail ? handleUpdateTask : handleCreateTask}
+                aria-label="Perform action"
+                className="px-6 py-3 text-white bg-[#050506] text-sm rounded-lg"
+              >
+                {taskDetail && !updateTaskIsLoading
+                  ? "update task"
+                  : !taskDetail && isLoading
+                  ? "Saving Action.."
+                  : taskDetail && updateTaskIsLoading
+                  ? "Updating task..."
+                  : "Save task"}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className="px-4 space-y-6 max-h-[calc(100vh-70px)] overflow-auto">
+          <div className="w-full flex flex-col gap-4 p-4 px-4">
+            {TaskFormData?.map((form, index) => {
+              return (
+                <label
+                  key={index}
+                  className="w-full flex flex-col gap-2 text-base"
+                  htmlFor={form.label}
+                >
+                  <span>{form.label}</span>
+                  {form.type === "textarea" ? (
+                    <textarea
+                      name={form.name}
+                      onChange={onChange}
+                      placeholder={form.placeholder}
+                      value={formvalue[form.name]}
+                      className="w-full h-[100px] text-sm rounded-md border p-4"
+                    />
+                  ) : (
+                    <input
+                      type={form.type}
+                      name={form.name}
+                      onChange={(e) => onChange(e)}
+                      placeholder={form.placeholder}
+                      value={formvalue[form.name]}
+                      className="w-full h-[50px] text-sm rounded-md border px-4"
+                    />
+                  )}
+                </label>
+              );
+            })}
+            <div className="w-full grid grid-cols-2 gap-4">
+              {/* <div className="w-full flex flex-col gap-2 text-base">
+                <span>Task Status</span>
+                <Select onValueChange={onSelectChange}>
+                  <SelectTrigger className="w-full h-[45px]">
+                    <SelectValue
+                      placeholder={formvalue?.status || "Select status"}
+                    />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="pending">Pending</SelectItem>
+                    <SelectItem value="in-progress">In-Progress</SelectItem>
+                    <SelectItem value="completed">Completed</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div> */}
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    </div>
+  );
+};
+
+export default TaskManagementModal;

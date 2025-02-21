@@ -10,12 +10,6 @@ export default function TaskList() {
     <div>
       <Table
         data={data}
-        onDeleteUser={function (a: string): void {
-          throw new Error("Function not implemented.");
-        }}
-        deleteModal={{
-          userId: "",
-        }}
         type={""}
       />
     </div>

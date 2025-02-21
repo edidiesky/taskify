@@ -3,15 +3,11 @@ const initialState = {
   savedRooms: [],
   loginmodal: false,
   registermodal: false,
-  groupnamemodal: false,
-  addgroupmembersmodal: false,
-  deletemessagemodal: false,
-  deletechannelmodal: false,
-  deleteworkspacemodal: false,
-  channelmodal: false,
+  deleteTaskmodal: false,
+  isTaskModalOpen: false,
   workspaceid: null,
   workspaceUserid: null,
-  channelid: null,
+  taskId: null,
 };
 
 export const modalSlice = createSlice({
@@ -33,45 +29,21 @@ export const modalSlice = createSlice({
       state.registermodal = false;
       document.body.classList.remove("modal-open");
     },
-    onGroupNameModal: (state, _action) => {
-      state.groupnamemodal = true;
+
+    onDeleteTaskModal: (state, _action) => {
+      state.deleteTaskmodal = true;
     },
-    offGroupNameModal: (state, _action) => {
-      state.groupnamemodal = false;
-    },
-    onCreateChannelModal: (state, action) => {
-      state.channelmodal = true;
-      state.workspaceid = action.payload.workspaceid;
-      state.workspaceUserid = action.payload.workspaceUserid;
-    },
-    offCreateChannelModal: (state, _action) => {
-      state.channelmodal = false;
-    },
-    onGroupMemberModal: (state, _action) => {
-      state.addgroupmembersmodal = true;
-    },
-    offGroupMemberModal: (state, _action) => {
-      state.addgroupmembersmodal = false;
-    },
-    onDeleteMessageModal: (state, _action) => {
-      state.deletemessagemodal = true;
-    },
-    offDeleteMessageModal: (state, _action) => {
-      state.deletemessagemodal = false;
+    offDeleteTaskModal: (state, _action) => {
+      state.deleteTaskmodal = false;
     },
 
-    onDeleteChannelModal: (state, _action) => {
-      state.deletechannelmodal = true;
+    onTaskModal: (state, action) => {
+      state.isTaskModalOpen = true;
+      state.taskId = action.payload;
     },
-    offDeleteChannelModal: (state, _action) => {
-      state.deletechannelmodal = false;
-    },
-
-    onDeleteWorkspaceModal: (state, _action) => {
-      state.deleteworkspacemodal = true;
-    },
-    offDeleteWorkspaceModal: (state, _action) => {
-      state.deleteworkspacemodal = false;
+    offTaskModal: (state, _action) => {
+      state.isTaskModalOpen = false;
+      state.taskId = null;
     },
   },
 });
@@ -81,18 +53,10 @@ export const {
   offLoginModal,
   onRegisterModal,
   offRegisterModal,
-  onGroupNameModal,
-  offGroupNameModal,
-  onGroupMemberModal,
-  offGroupMemberModal,
-  onDeleteMessageModal,
-  offDeleteMessageModal,
-  onCreateChannelModal,
-  offCreateChannelModal,
-  onDeleteChannelModal,
-  offDeleteChannelModal,
-  onDeleteWorkspaceModal,
-  offDeleteWorkspaceModal,
+  onDeleteTaskModal,
+  offDeleteTaskModal,
+  onTaskModal,
+  offTaskModal,
 } = modalSlice.actions;
 
 export default modalSlice.reducer;

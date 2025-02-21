@@ -45,40 +45,18 @@ export type RegisterFormDataItem = {
   type: string;
   required: boolean;
 };
-// -------- Login form Data Type End ----------------------
 
-export type ApplicationFormDataItem = {
+//// Task Form Data
+
+export type TaskFormValueType = {
+  title: string;
+  status: string;
+  description: string;
+};
+export type TaskFormDataItem = {
   id: number;
-  name: keyof FormValueType; // It ensures the name corresponds to keys in FormValueType
-  text: string;
+  name: keyof TaskFormValueType; // It ensures the name corresponds to keys in FormValueType
   label: string;
   type: string;
-  required: boolean;
-};
-
-export type PasswordFormValueType = {
-  password: string;
-  confirmpassword: string;
-};
-
-export type ProfilePasswordDataItem = {
-  id: number;
-  name: keyof PasswordFormValueType; // It ensures the name corresponds to keys in FormValueType
-  text: string;
-  label: string;
-  type: string;
-  required: boolean;
-};
-
-export type productDataType = {
-  name: string;
-  _id: string;
-  store:string;
-  price: number;
-  id: string;
-  image: string;
-  category: string;
-  size: string;
-  color: string;
-  availabilityCount?: number;
+  placeholder: string;
 };

@@ -1,5 +1,4 @@
 "use client";
-import { AnimatePresence } from "framer-motion";
 
 import { useState } from "react";
 import TableList from "./TableList";
@@ -16,14 +15,7 @@ type UserTableType = {
     size: string;
     color: string;
   }[];
-  onDeleteUser: (a: string) => void;
-  onSort?: (a: string, b: any) => void;
   hasMore?: boolean;
-  setDeleteModal?: () => void;
-  setIsModalOpen?: () => void;
-  onUserClick?: () => void;
-  deleteModal: { userId: string };
-  deleteisloading?: boolean;
   fetchNextPage?: () => void;
   fetchPrevPage?: () => void;
   currentPage?: Number;
@@ -33,41 +25,12 @@ type UserTableType = {
 export const Table = ({
   headers = DEFAULT_HEADERS,
   data = [],
-  onDeleteUser,
-  onSort,
-  setDeleteModal,
-  deleteModal,
-  onUserClick,
-  deleteisloading,
-  setIsModalOpen,
   fetchNextPage,
   fetchPrevPage,
   hasMore,
   currentPage,
   type,
 }: UserTableType) => {
-  const [editingUserId, setEditingUserId] = useState(null);
-  const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
-  // console.log(deleteModal);
-  const getStatusStyle = (isActive: boolean) => {
-    return isActive ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800";
-  };
-
-  const handleDeleteClick = () => {
-    if (deleteModal.userId) {
-      onDeleteUser(deleteModal?.userId);
-    }
-  };
-
-  const handleSort = (key: any) => {
-    let direction = "asc";
-    if (sortConfig.key === key && sortConfig.direction === "asc") {
-      direction = "desc";
-    }
-    setSortConfig({ key, direction });
-    onSort?.(key, direction);
-  };
-
   return (
     <div className="w-full min-h-[250px] items-center justify-center p-4 border py-8 bg-[#fff] rounded-lg flex flex-col">
       <div className="overflow-auto w-full flex flex-col gap-4">
@@ -88,7 +51,6 @@ export const Table = ({
                     key={index}
                     scope="col"
                     className="px-4  py-4 text-left text-sm  font-normal text-[#777] capitalize tracking-wider cursor-pointer"
-                    onClick={() => handleSort(header.toLowerCase())}
                   >
                     <div className="flex items-center">{header}</div>
                   </th>
@@ -99,7 +61,7 @@ export const Table = ({
           <tbody className="text-sm divide-y divide-gray-200">
             {data.length > 0 ? (
               data.map((tableData: any, rowIndex) => (
-                <TableList key={rowIndex} type={type} tableData={tableData} />
+                <TableList key={rowIndex} tableData={tableData} />
               ))
             ) : (
               <tr>
@@ -139,19 +101,6 @@ export const Table = ({
           </div>
         </div>
       </div>
-      {/* <AnimatePresence mode="wait">
-        {deleteModal?.isOpen && (
-          <DeleteConfirmationModal
-            isOpen={deleteModal?.isOpen}
-            deleteisloading={deleteisloading}
-            onClose={() =>
-              setDeleteModal({ isOpen: false, userId: null, userName: "" })
-            }
-            onConfirm={handleDeleteClick}
-            userName={deleteModal?.userName}
-          />
-        )}
-      </AnimatePresence> */}
     </div>
   );
 };

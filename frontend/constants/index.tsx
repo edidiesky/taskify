@@ -1,5 +1,5 @@
 import {
-  ProfilePasswordDataItem,
+  TaskFormDataItem,
   RegisterFormDataItem,
   LoginFormDataItem,
   ProfileFormDataItem,
@@ -83,31 +83,36 @@ export const RegisterFormData: RegisterFormDataItem[] = [
     required: true,
   },
 ];
-export const PasswordFormData: ProfilePasswordDataItem[] = [
+
+export const TaskFormData: TaskFormDataItem[] = [
   {
-    id: 4,
-    name: "password",
-    type: "password",
-    text: "Change your Password",
-    label: "my password",
-    required: true,
+    id: 34,
+    type: "text",
+    placeholder: "Task title",
+    name: "title",
+    label: "Task Title",
   },
   {
-    id: 43,
-    name: "confirmpassword",
-    type: "password",
-    text: "Change your preferred Password",
-    label: "Confirm your password",
-    required: true,
+    id: 14,
+    type: "textarea",
+    placeholder: "Task description",
+    name: "description",
+    label: "Task Description",
+  },
+  {
+    id: 24,
+    type: "text",
+    placeholder: "Task status",
+    name: "status",
+    label: "Task Status",
   },
 ];
-
-
 
 // --------------------------- form Data List End --------------------
 
 // ------------- API REQUEST ROUTE -----------------
-export const BASE_URL = process.env.NODE_ENV === "development" ? "http://127.0.0.1:8000" : "";
+export const BASE_URL =
+  process.env.NODE_ENV === "development" ? "http://127.0.0.1:8000" : "";
 
 export const TASK_URL = "/api/tasks";
 export const AUTH_URL = "/api/auth";
