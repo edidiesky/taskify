@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import TableList from "./TableList";
 
 const DEFAULT_HEADERS = ["ID", "Title", "Status", "Description", "Actions"];
@@ -13,22 +14,19 @@ type UserTableType = {
     size: string;
     color: string;
   }[];
-  hasMore?: boolean;
-  fetchNextPage?: () => void;
-  fetchPrevPage?: () => void;
-  currentPage?: Number;
   type: string;
+  last_page?: any;
+  current_page?: any;
 };
 
 export const Table = ({
   headers = DEFAULT_HEADERS,
   data = [],
-  fetchNextPage,
-  fetchPrevPage,
-  hasMore,
-  currentPage,
   type,
+  current_page,
+  last_page,
 }: UserTableType) => {
+  const [page, setPage] = useState(1);
   return (
     <div className="w-full min-h-[250px] items-center justify-center p-4 border py-8 bg-[#fff] rounded-lg flex flex-col">
       <div className="overflow-auto w-full flex flex-col gap-4">
@@ -82,15 +80,17 @@ export const Table = ({
             </span>
             <div className="flex space-x-1">
               <button
-                onClick={fetchPrevPage}
-                disabled={currentPage === 1}
+                onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+                disabled={page === 1}
                 className="px-3 py-1 border rounded text-sm text-gray-500 hover:bg-gray-50 disabled:opacity-50"
               >
                 Previous
               </button>
               <button
-                onClick={fetchNextPage}
-                disabled={hasMore}
+                onClick={() =>
+                  setPage((prev) => (prev < last_page ? prev + 1 : prev))
+                }
+                disabled={page === last_page}
                 className="px-3 py-1 border rounded text-sm text-gray-500 hover:bg-gray-50 disabled:opacity-50"
               >
                 Next

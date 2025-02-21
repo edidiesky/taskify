@@ -33,7 +33,7 @@ class TaskController extends Controller
     // Get all tasks for the taskify user
     public function index()
     {
-        $tasks = Task::where('user_id', Auth::id())->get()::paginate(10);
+        $tasks = Task::where('user_id', Auth::id())->get()::paginate(4);
         return response()->json($tasks);
     }
 
