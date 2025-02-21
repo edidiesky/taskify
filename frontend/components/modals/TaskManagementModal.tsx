@@ -90,7 +90,7 @@ const TaskManagementModal = () => {
   // console.log("formvalue", formvalue);
   // console.log("taskId", taskId)
   return (
-    <div className="fixed inset-0 bg-[rgba(0,0,0,.3)] flex items-center justify-end z-50 p-4">
+    <div className="fixed inset-0 bg-[rgba(0,0,0,.3)] flex items-center justify-end z-[150] p-4">
       <motion.div
         variants={slideRight}
         initial="initial"

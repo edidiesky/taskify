@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,12 +15,16 @@ class TaskController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'status' => 'required|in:pending,in-progress,completed',
+            'due_date' => 'nullable|date',
         ]);
 
         $task = Task::create([
             'user_id' => Auth::id(),
             'title' => $validated['title'],
             'description' => $validated['description'] ?? '',
+            'status' => $validated['status'],
+            'due_date' => $validated['due_date'],
         ]);
 
         return response()->json($task, 201);
@@ -28,7 +33,7 @@ class TaskController extends Controller
     // Get all tasks for the taskify user
     public function index()
     {
-        $tasks = Task::where('user_id', Auth::id())->get();
+        $tasks = Task::where('user_id', Auth::id())->get()::paginate(10);
         return response()->json($tasks);
     }
 
@@ -51,7 +56,8 @@ class TaskController extends Controller
         $validated = $request->validate([
             'title' => 'sometimes|string|max:255',
             'description' => 'nullable|string',
-            'status' => 'in:pending,completed',
+            'status' => 'required|in:pending,in-progress,completed',
+            'due_date' => 'nullable|date',
         ]);
 
         $task->update($validated);

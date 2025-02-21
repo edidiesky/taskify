@@ -33,7 +33,7 @@ export const DeleteConfirmationModal = () => {
     }
   };
   return (
-    <div className="fixed inset-0 bg-[rgba(0,0,0,.3)] flex items-center justify-center x-50 p-4">
+    <div className="fixed inset-0 bg-[rgba(0,0,0,.3)] flex items-center justify-center z-[150] p-4">
       <motion.div
         variants={slide}
         initial="initial"
