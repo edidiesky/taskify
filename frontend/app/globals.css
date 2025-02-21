@@ -1,0 +1,132 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+:root {
+  --primary-color: #ed3237;
+  --secondary-color-1: #1e1e1e;
+  --secondary-color-2: #7a7a7b;
+}
+
+@font-face {
+  font-family: "Extra_Bold";
+  src: url("../fonts/ClashGrotesk-Regular.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Bold";
+  src: url("../fonts/ClashGrotesk-Medium.otf") format("opentype");
+}
+@font-face {
+  font-family: "Regular";
+  src: url("../fonts/ClashGrotesk-Regular.otf") format("opentype");
+}
+
+body {
+  font-family: "Regular", sans-serif;
+  /* Use the font family */
+}
+
+/* button styles */
+.btn {
+  min-height: 45px;
+  /* min-width: 130px; */
+  border-radius: 15px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 24px;
+  background-color: #151402;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.btn:hover {
+  transform: scale(0.9);
+}
+
+.btn.btn_2 {
+  color: var(--button_color);
+  background-color: #fff;
+  /* border: 1px solid #151402; */
+  color: #000;
+}
+
+.btn.btn_3 {
+  color: var(--button_color);
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.btn.btn_4 {
+  color: var(--button_color);
+  background-color: transparent;
+  border-bottom: 1px solid #6d73ff;
+  border-radius: 0px;
+  padding: 16px;
+  padding-left: 0;
+}
+
+/* input styles */
+.input {
+  min-height: 45px;
+  border: 1.5px solid rgba(0, 0, 0, 0.1);
+  padding: 0 1rem;
+  background-color: #fff !important;
+  font-family: "Regular", sans-serif;
+  font-weight: normal;
+  color: #777;
+}
+input::placeholder {
+  color: #777;
+}
+form input {
+  min-height: 50px;
+  border: 1.5px solid rgba(0, 0, 0, 0.1);
+  padding: 0 1rem;
+  background-color: #fff !important;
+}
+
+form input:hover {
+  box-shadow: 0 0 0 6px var(--shadow_color);
+}
+th,
+tbody,
+td,
+tr {
+  font-family: "Regular", sans-serif !important;
+  font-weight: normal !important;
+}
+h1,
+h2 {
+  font-family: "Extra_Bold", sans-serif !important;
+}
+
+/* lenis scroll */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+.hide {
+  overflow: hidden !important;
+}

@@ -1,0 +1,45 @@
+"use client";
+import { onLoginModal, onRegisterModal } from "@/redux/slices/modalSlice";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Link from "next/link";
+import UserProfile from "../common/Avatar";
+
+const Header = () => {
+  const dispatch = useDispatch();
+  const { currentUser } = useSelector((store: { auth?: any }) => store.auth);
+  // console.log(currentUser);
+  return (
+    <div className="w-full py-4 bg-transparent">
+      <div className="w-full mx-auto border px-5 bg-[#FFFFFF] rounded-full py-4 min-h-[75px] flex items-center justify-between">
+        <div className="flex items-center gap-8 lg:gap-12">
+          <Link href={"/"} className="text-lg lg:text-2xl text-[var(--dark-1)]">
+            RayTaskify
+          </Link>
+        </div>
+        <div className="hidden lg:flex flex-1 justify-center items-center gap-12">
+          <Link href={"#"} className="text-lg text-[var(--dark-1)] font-normal">
+            My Tasks
+          </Link>
+          <Link href={"#"} className="text-lg text-[var(--dark-1)] font-normal">
+            Setting
+          </Link>
+          <Link href={"#"} className="text-lg text-[var(--dark-1)] font-normal">
+            Analytics
+          </Link>
+        </div>
+        <div className="flex items-center justify-end gap-8 md:gap-12">
+          <div className="flex items-center justify-end">
+            <div className="flex items-center justify-end gap-2 md:gap-4">
+             
+
+              <UserProfile />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Header;
