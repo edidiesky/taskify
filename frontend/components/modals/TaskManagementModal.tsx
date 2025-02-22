@@ -24,7 +24,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { TaskFormData } from "@/constants";
 import {
   useCreateTaskMutation,
-  useGetAllTaskQuery,
   useGetSingleTaskQuery,
   useUpdateTaskMutation,
 } from "@/redux/services/taskApi";
@@ -46,21 +45,13 @@ const TaskManagementModal = () => {
     setFormValue((prev) => ({ ...prev, [name]: value }));
   };
 
-  const onSelectChange = (value: any) => {
-    setFormValue((prev) => ({ ...prev, taskCategory: value }));
+  const onSelectChange = (value: string) => {
+    setFormValue((prev) => ({ ...prev, status: value }));
   };
 
   const { data: taskDetail, isLoading } = useGetSingleTaskQuery(taskId, {
     skip: !taskId,
   });
-  useEffect(() => {
-    if (taskDetail) {
-      setFormValue({
-        ...taskDetail,
-      });
-    }
-  }, [taskDetail, setFormValue]);
-
   const [createTask, { isLoading: createTaskIsLoading }] =
     useCreateTaskMutation();
 
@@ -94,9 +85,17 @@ const TaskManagementModal = () => {
     }
   };
 
+  useEffect(() => {
+    if (taskDetail) {
+      setFormValue({
+        ...taskDetail,
+      });
+    }
+  }, [taskDetail, setFormValue]);
   // console.log("taskDetail", taskDetail);
-  // console.log("formvalue", formvalue);
+  console.log("formvalue", formvalue);
   // console.log("taskId", taskId)
+  // console.log("isTaskModalOpen", isTaskModalOpen);
   return (
     <div className="fixed inset-0 bg-[rgba(0,0,0,.3)] flex items-center justify-end z-[150] p-4">
       <motion.div
@@ -104,7 +103,7 @@ const TaskManagementModal = () => {
         initial="initial"
         animate={isTaskModalOpen ? "enter" : "exit"}
         exit={"exit"}
-        className="bg-[#fff] w-full rounded-xl border relative flex flex-col gap-8 lg:w-[550px] h-[95vh]"
+        className="bg-[#fff] w-full overflow-hidden rounded-xl border relative flex flex-col gap-8 lg:w-[550px] h-[95vh]"
       >
         {/* Header */}
         <div className="border-b w-full flex flex-col gap-8 p-4 px-4">
@@ -129,10 +128,9 @@ const TaskManagementModal = () => {
                 Cancel
               </button>
               <button
-                disabled={createTaskIsLoading || updateTaskIsLoading}
                 onClick={taskDetail ? handleUpdateTask : handleCreateTask}
                 aria-label="Perform action"
-                className="px-6 py-3 text-white bg-[#050506] text-sm rounded-lg"
+                className="px-6 py-3 text-white bg-[#050506] cursor-pointer text-sm rounded-lg"
               >
                 {taskDetail && !updateTaskIsLoading
                   ? "update task"
@@ -177,51 +175,57 @@ const TaskManagementModal = () => {
                 </label>
               );
             })}
-            <div className="w-full grid grid-cols-2 gap-4">
+            <div className="w-full grid grid-cols-1 gap-4">
               <div className="w-full flex flex-col gap-2 text-base">
                 <span>Task Status</span>
+                {/* onValueChange={onSelectChange} */}
                 <Select onValueChange={onSelectChange}>
                   <SelectTrigger className="w-full h-[45px]">
                     <SelectValue
                       placeholder={formvalue?.status || "Select status"}
                     />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent
+                    position="popper"
+                    className="absolute z-[999] bg-white"
+                  >
                     <SelectItem value="pending">Pending</SelectItem>
-                    <SelectItem value="in-progress">In-Progress</SelectItem>
+                    <SelectItem value="in_progress">In-Progress</SelectItem>
                     <SelectItem value="completed">Completed</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
-
               <Popover>
                 <PopoverTrigger asChild>
-                  <div className="w-full flex flex-col gap-1">
+                  <div className="w-full flex text-base flex-col gap-1">
                     <span>Task Due Date</span>
-
-                    <div
-                      variant={"outline"}
-                      className={cn(
-                        "w-[240px] pl-3 text-left font-normal",
-                        !field.value && "text-muted-foreground"
-                      )}
-                    >
-                      {field.value ? (
-                        format(field.value, "PPP")
+                    <div className="w-full rounded-md cursor-pointer p-3 text-sm flex items-center border justify-between gap-1 font-normal">
+                      {formvalue.due_date ? (
+                        format(formvalue.due_date, "PPP")
                       ) : (
                         <span>Pick a date</span>
                       )}
-                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                      <CalendarIcon className="h-4 w-4 opacity-50" />
                     </div>
                   </div>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
+                <PopoverContent
+                  className="w-auto p-0 z-[999] bg-white"
+                  align="start"
+                >
                   <Calendar
                     mode="single"
-                    selected={field.value}
-                    onSelect={field.onChange}
+                    selected={formvalue.due_date}
+                    onSelect={(date) => {
+                      if (date) {
+                        setFormValue((prev) => ({ ...prev, due_date: date }));
+                      }
+                    }}
                     disabled={(date) =>
-                      date > new Date() || date < new Date("1900-01-01")
+                      date <
+                        new Date(
+                          new Date().setDate(new Date().getDate() - 1)
+                        ) || date > new Date("2100-01-01")
                     }
                     initialFocus
                   />

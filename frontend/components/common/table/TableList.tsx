@@ -1,10 +1,8 @@
 import React from "react";
+import moment from "moment";
 import { FiEdit2, FiTrash2 } from "react-icons/fi";
-import { AnimatePresence } from "framer-motion";
 import { useSelector, useDispatch } from "react-redux";
-import TaskManagementModal from "@/components/modals/TaskManagementModal";
 import { onTaskModal, onDeleteTaskModal } from "@/redux/slices/modalSlice";
-import { DeleteConfirmationModal } from "@/components/modals/DeleteConfirmationModal";
 
 //  Functional component for the table list
 export default function TableList({ tableData }: { tableData: any }) {
@@ -19,14 +17,6 @@ export default function TableList({ tableData }: { tableData: any }) {
     <>
       {/* animating the task management modal */}
 
-      <AnimatePresence mode="wait">
-        {isTaskModalOpen && <TaskManagementModal />}
-      </AnimatePresence>
-
-      {/* animating the delete confirmation modal */}
-      <AnimatePresence mode="wait">
-        {isdeleteTaskmodal && <DeleteConfirmationModal />}
-      </AnimatePresence>
       <tr
         className={`hover:bg-gray-100 bg-[#f2f2f2] cursor-pointer transition-colors`}
         onClick={() => {
@@ -44,7 +34,18 @@ export default function TableList({ tableData }: { tableData: any }) {
           {tableData?.status}
         </td>
         <td className="px-6 py-4 border-b whitespace-nowrap text-sm lg:text-base text-[#777]">
-          {tableData?.description?.slice(0, 30)}...
+          {moment(tableData?.due_date)?.format("DD MMM YYYY")}
+        </td>
+        <td className="px-6 py-4 border-b whitespace-nowrap text-sm lg:text-base text-[#777]">
+          <button
+            className="transition-colors p-3 hover:bg-[#e8e8e3d0] rounded-full"
+            aria-label="Edit tableData"
+            onClick={() => {
+              dispatch(onTaskModal(tableData?.id));
+            }}
+          >
+            Mark as Completed
+          </button>
         </td>
         <td
           className="px-6 py-4 whitespace-nowrap  border-b text-right text-sm lg:text-base"

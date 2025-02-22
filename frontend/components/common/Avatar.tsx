@@ -11,19 +11,23 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 const UserProfile = () => {
   const [active, setActive] = useState(false);
-  const { currentUser } = useSelector((store: { auth?: any }) => store.auth);
+  const { currentUser } = useSelector((store: { auth: any }) => store.auth);
   const [logout] = useLogoutMutation();
+  const router = useRouter()
   const dispatch = useDispatch();
   const handleLogOut = async () => {
     try {
-      dispatch(LogOut(""));
       await logout("");
+      router.push('/')
       toast.success("You have been logged out successfully!");
-    } catch (err: any) {
+    } catch (err:any) {
       console.log(err);
       toast.error(err?.data?.message || err.error);
+    } finally {
+      dispatch(LogOut(""));
     }
   };
   return (

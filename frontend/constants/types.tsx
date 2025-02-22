@@ -35,7 +35,8 @@ export type LoginFormDataItem = {
 export type RegisterValueType = {
   email: string;
   password: string;
-  fullname: string;
+  name: string;
+  password_confirmation:string;
 };
 export type RegisterFormDataItem = {
   id: number;

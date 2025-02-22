@@ -14,10 +14,10 @@ export const protectRoute = <P extends object>(Component: ComponentType<P>) => {
       } else {
         setLoading(false);
       }
-    }, []);
+    }, [router]);
     if (loading) {
       return (
-        <div className="w-full h-full flex items-center justify-center">
+        <div className="w-full h-full bg-white z-[10000] flex items-center justify-center">
           <Loader type="" />
         </div>
       );

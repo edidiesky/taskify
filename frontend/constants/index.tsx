@@ -60,9 +60,9 @@ export const LoginFormData: LoginFormDataItem[] = [
 export const RegisterFormData: RegisterFormDataItem[] = [
   {
     id: 23,
-    name: "fullname",
+    name: "name",
     type: "text",
-    text: "fullname",
+    text: "name",
     label: "John Doe",
     required: true,
   },
@@ -80,6 +80,15 @@ export const RegisterFormData: RegisterFormDataItem[] = [
     type: "password",
     text: "Password",
     label: "Strong Password",
+    required: true,
+  },
+
+  {
+    id: 33,
+    name: "password_confirmation",
+    type: "password",
+    text: "Password Confirmation",
+    label: "Confirm your Password",
     required: true,
   },
 ];

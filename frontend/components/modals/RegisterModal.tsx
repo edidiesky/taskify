@@ -14,11 +14,10 @@ const RegisterModal = () => {
   const dispatch = useDispatch();
   const [formValue, setFormValue] = useState({
     email: "",
-    fullname: "",
+    name: "",
     password: "",
+    password_confirmation: "",
   });
-  // )kD+ib7B5(c/Kh@
-
   const [register, { isLoading, isSuccess }] = useRegisterMutation();
   const noEntry = formValue.email === "";
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,12 +28,12 @@ const RegisterModal = () => {
     dispatch(offRegisterModal(""));
     dispatch(onLoginModal(""));
   };
+  // handler for registration
   const handleFormSubmision = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     try {
       const data = await register(formValue).unwrap();
-      // dispatch(setUserCredentials({ data }));
-      toast.success(data?.message);
+      toast.success("Registered successfully");
     } catch (err: any) {
       toast.error(err?.data?.message || err.error);
     }
@@ -47,13 +46,13 @@ const RegisterModal = () => {
     }
   }, [isSuccess]);
   return (
-    <div className="h-[100vh] bg-[#16161639] inset-0 backdrop-blur-sm w-full fixed top-0 left-0 z-[5000] flex items-center justify-center">
+    <div className="h-[100vh] bg-[#16161639] inset-0 backdrop-blur-sm w-full fixed top-0 left-0 z-[5000] flex items-end lg:items-center justify-end md:justify-center">
       <motion.div
         variants={slide}
         initial="initial"
         animate={registermodal ? "enter" : "exit"}
         exit={"exit"}
-        className="modal-content w-full min-h-full md:w-[400px] md:max-w-[800px] lg:w-[800px] md:min-h-[550px] lg:h-[550px] justify-center relative items-start bg-white"
+        className="modal-content w-full min-h-[90%] md:w-[400px] md:max-w-[800px] lg:w-[800px] md:min-h-[550px] lg:h-[550px] justify-center relative items-start bg-white"
       >
         <div
           onClick={() => dispatch(offRegisterModal(""))}
@@ -83,9 +82,7 @@ const RegisterModal = () => {
                       htmlFor=""
                       className="text-sm flex flex-col gap-1"
                     >
-                      <span className="">
-                        {formdata?.text}
-                      </span>
+                      <span className="capitalize">{formdata?.text}</span>
                       <input
                         type={formdata?.type}
                         value={formValue[formdata.name]}
@@ -129,7 +126,7 @@ const RegisterModal = () => {
               </div>
             </form>
           </div>
-          <div className="w-full h-full relative">
+          <div className="w-full h-full lg:flex hidden relative">
             <img
               src={
                 "https://app.crisp.chat/images/components/initiate/InitiateLayout/illustration_background.svg"

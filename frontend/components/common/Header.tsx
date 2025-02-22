@@ -1,5 +1,5 @@
 "use client";
-import { onLoginModal, onRegisterModal } from "@/redux/slices/modalSlice";
+import { onLoginModal } from "@/redux/slices/modalSlice";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Avatar from "./Avatar";
@@ -7,7 +7,7 @@ import Link from "next/link";
 
 const Header = () => {
   const dispatch = useDispatch();
-  const { currentUser } = useSelector((store: { auth?: any }) => store.auth);
+  const { currentUser } = useSelector((store: { auth: any }) => store.auth);
   // console.log(currentUser);
   return (
     <div className="w-full py-4 sticky z-[100] top-0 bg-transparent">
@@ -17,7 +17,7 @@ const Header = () => {
       >
         <div className="flex items-center gap-8 lg:gap-12">
           <Link href={"/"} className="text-lg lg:text-2xl text-[var(--dark-1)]">
-            RayTaskify
+            Taskify
           </Link>
         </div>
         <div className="hidden lg:flex flex-1 justify-center items-center gap-12">
@@ -38,7 +38,7 @@ const Header = () => {
           <div className="flex items-center justify-end">
             {currentUser ? (
               <div className="flex items-center justify-end gap-2 md:gap-4">
-                <Link href={"/dashboard"} className="btn bg-[#3e3aff] shadows">
+                <Link href={"/dashboard"} className="btn md:text-base text-sm bg-[#3e3aff] shadows">
                   Go to Dashboard
                 </Link>
 
@@ -49,7 +49,7 @@ const Header = () => {
                 <span className="">
                   <button
                     onClick={() => dispatch(onLoginModal(""))}
-                    className="btn"
+                    className="btn md:text-base text-sm"
                   >
                     Get Started
                   </button>

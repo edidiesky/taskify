@@ -1,7 +1,7 @@
 # Use official PHP image with necessary extensions
 FROM php:8.2-fpm
 
-# Set working directory
+# Setting working directory
 WORKDIR /var/www
 
 # Install dependencies

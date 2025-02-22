@@ -24,7 +24,7 @@ Taskify is a full-stack task management application built with Laravel (backend)
 
 ## Backend Setup (Laravel)
 ###  Environment Configuration
-Create a `.env` file in the `backend/` folder and configure your database:
+In order to use this project you will need to create a `.env` file in the `backend/` folder and configure your database:
 ```ini
 APP_NAME=Taskify
 APP_ENV=local
@@ -43,7 +43,7 @@ SANCTUM_STATEFUL_DOMAINS=localhost:3000
 SESSION_DOMAIN=localhost
 ```
 
-### Run the Application with Docker
+### You can now run the Application with Docker
 Navigate to the project root and run:
 ```sh
 docker-compose up --build
