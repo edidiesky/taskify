@@ -61,8 +61,7 @@ const TaskManagementModal = () => {
     useUpdateTaskMutation();
 
   // Handler for creating a Task
-  const handleCreateTask = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleCreateTask = async () => {
     try {
       await createTask(formvalue).unwrap();
       toast.success("Task Created succesfully!!");
@@ -76,8 +75,7 @@ const TaskManagementModal = () => {
 
   // Handler for updating a Task
 
-  const handleUpdateTask = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleUpdateTask = async () => {
     try {
       await updateTask(formvalue).unwrap();
       toast.success("Task Updated succesfully!!");
