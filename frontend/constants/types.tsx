@@ -1,11 +1,4 @@
-ilsexport type ProfileFormDataItem = {
-  id: number;
-  name: keyof FormValueType; // It ensures the name corresponds to keys in FormValueType
-  text: string;
-  label: string;
-  type: string;
-  required: boolean;
-};
+
 export type FormValueType = {
   name: string;
   username: string;
