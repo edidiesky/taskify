@@ -7,5 +7,5 @@ import React from "react";
 export default function TaskList() {
   const { data, isLoading } = useGetAllTaskQuery("");
   // console.log("task data", data);
-  return <div>{isLoading ? <Loader type=""/> : <Table tasks={data} type={""} />}</div>;
+  return <div>{isLoading ? <Loader type=""/> : <Table tasks={data} />}</div>;
 }
