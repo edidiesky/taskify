@@ -2,43 +2,8 @@ import {
   TaskFormDataItem,
   RegisterFormDataItem,
   LoginFormDataItem,
-  ProfileFormDataItem,
 } from "./types";
 
-export const ProfileFormData: ProfileFormDataItem[] = [
-  {
-    id: 4,
-    name: "name",
-    type: "text",
-    text: "Change your Name",
-    label: "Alfred Dow",
-    required: true,
-  },
-  {
-    id: 43,
-    name: "username",
-    type: "text",
-    text: "Change your preferred Name",
-    label: "JohnDoe123",
-    required: true,
-  },
-  {
-    id: 1,
-    name: "email",
-    type: "email",
-    text: "Change your Email",
-    label: "hello@example.com",
-    required: true,
-  },
-  {
-    id: 42,
-    name: "linkedln",
-    type: "text",
-    text: "Change your Linkedin Profile",
-    label: "linkedin.com/in/johndoe3",
-    required: true,
-  },
-];
 export const LoginFormData: LoginFormDataItem[] = [
   {
     id: 1,
