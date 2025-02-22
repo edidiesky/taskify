@@ -19,11 +19,10 @@ type UserTableType = {
     total?: number;
     data: {
       title: string;
-      price: number;
+      due_date: string;
       id: string;
-      category: string;
-      size: string;
-      color: string;
+      status: string;
+      description: string;
     }[];
   };
 };
@@ -64,9 +63,18 @@ export const Table = ({ headers = DEFAULT_HEADERS, tasks }: UserTableType) => {
 
           <tbody className="text-sm divide-y divide-gray-200">
             {tasks?.data?.length > 0 ? (
-              tasks?.data?.map((tableData: any, rowIndex) => (
-                <TableList key={rowIndex} tableData={tableData} />
-              ))
+              tasks?.data?.map(
+                (
+                  tableData: {
+                    title: string;
+                    due_date: string;
+                    id: string;
+                    status: string;
+                    description: string;
+                  },
+                  rowIndex
+                ) => <TableList key={rowIndex} tableData={tableData} />
+              )
             ) : (
               <tr>
                 <td

@@ -13,7 +13,8 @@ import { offDeleteTaskModal } from "@/redux/slices/modalSlice";
 export const DeleteConfirmationModal = () => {
   const dispatch = useDispatch();
   const { isdeleteTaskmodal, taskId } = useSelector(
-    (state: any) => state.modal
+    (state: { modal: { isdeleteTaskmodal: boolean; taskId: number } }) =>
+      state.modal
   );
   const { data: taskDetail } = useGetSingleTaskQuery(taskId, {
     skip: !taskId,
@@ -28,8 +29,10 @@ export const DeleteConfirmationModal = () => {
       await deleteTask(taskDetail?.id).unwrap();
       toast.success("Task Deleted succesfully!!");
       dispatch(offDeleteTaskModal(""));
-    } catch (err: any) {
-      toast.error(err?.data?.message || err.error);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        toast.error(err.message);
+      }
     }
   };
   return (
@@ -43,7 +46,7 @@ export const DeleteConfirmationModal = () => {
       >
         <div className="py-2 px-4">
           <h3 className="text-xl">
-            Are you sure you want to delete "{taskDetail?.title}" ?
+            Are you sure you want to delete &rdquo;{taskDetail?.title}&rdquo; ?
           </h3>
           <p className="text-base text-gray-500 mt-1">
             This action cannot be undone.

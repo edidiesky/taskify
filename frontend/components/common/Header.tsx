@@ -7,7 +7,9 @@ import Link from "next/link";
 
 const Header = () => {
   const dispatch = useDispatch();
-  const { currentUser } = useSelector((store: { auth: any }) => store.auth);
+  const { currentUser } = useSelector(
+    (store: { auth: { currentUser: { name: string } } }) => store.auth
+  );
   // console.log(currentUser);
   return (
     <div className="w-full py-4 sticky z-[100] top-0 bg-transparent">
@@ -38,7 +40,10 @@ const Header = () => {
           <div className="flex items-center justify-end">
             {currentUser ? (
               <div className="flex items-center justify-end gap-2 md:gap-4">
-                <Link href={"/dashboard"} className="btn md:text-base text-sm bg-[#3e3aff] shadows">
+                <Link
+                  href={"/dashboard"}
+                  className="btn md:text-base text-sm bg-[#3e3aff] shadows"
+                >
                   Go to Dashboard
                 </Link>
 

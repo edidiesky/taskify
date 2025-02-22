@@ -10,7 +10,9 @@ import { useRegisterMutation } from "@/redux/services/userApi";
 import Loader from "../common/loader";
 import toast from "react-hot-toast";
 const RegisterModal = () => {
-  const { registermodal } = useSelector((store?: any) => store.modal);
+  const { registermodal } = useSelector(
+    (store: { modal: { registermodal: boolean } }) => store.modal
+  );
   const dispatch = useDispatch();
   const [formValue, setFormValue] = useState({
     email: "",
@@ -29,13 +31,15 @@ const RegisterModal = () => {
     dispatch(onLoginModal(""));
   };
   // handler for registration
-  const handleFormSubmision = async (e: { preventDefault: () => void }) => {
+  const handleFormSubmision = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const data = await register(formValue).unwrap();
+      await register(formValue).unwrap();
       toast.success("Registered successfully");
-    } catch (err: any) {
-      toast.error(err?.data?.message || err.error);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        toast.error(err.message);
+      }
     }
   };
 
@@ -44,7 +48,7 @@ const RegisterModal = () => {
       dispatch(offRegisterModal(""));
       dispatch(onLoginModal(""));
     }
-  }, [isSuccess]);
+  }, [isSuccess, dispatch]);
   return (
     <div className="h-[100vh] bg-[#16161639] inset-0 backdrop-blur-sm w-full fixed top-0 left-0 z-[5000] flex items-end lg:items-center justify-end md:justify-center">
       <motion.div

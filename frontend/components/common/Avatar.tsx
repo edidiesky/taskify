@@ -14,22 +14,27 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 const UserProfile = () => {
   const [active, setActive] = useState(false);
-  const { currentUser } = useSelector((store: { auth: any }) => store.auth);
+  const { currentUser } = useSelector(
+    (store: { auth: { currentUser?: { name: string; image: string } | null } }) =>
+      store.auth
+  );
   const [logout] = useLogoutMutation();
-  const router = useRouter()
+  const router = useRouter();
   const dispatch = useDispatch();
   const handleLogOut = async () => {
     try {
       await logout("");
-      router.push('/')
+      router.push("/");
       toast.success("You have been logged out successfully!");
-    } catch (err:any) {
-      console.log(err);
-      toast.error(err?.data?.message || err.error);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        toast.error(err.message);
+      }
     } finally {
       dispatch(LogOut(""));
     }
   };
+  const username = currentUser?.name
   return (
     <div className=" relative">
       {currentUser && (
@@ -49,7 +54,7 @@ const UserProfile = () => {
                     onClick={() => setActive(!active)}
                     className="w-12 h-12 flex items-center text-[#fff] justify-center text-xl rounded-full bg-[#A1718A]"
                   >
-                    {currentUser?.name?.slice("")[0]}
+                    {username?.slice(0, 1)[0]}
                   </div>
                 )}
               </div>
@@ -88,7 +93,6 @@ const UserProfile = () => {
                       My Profile
                     </Link>
                   </div>
-                 
                 </div>
 
                 <div

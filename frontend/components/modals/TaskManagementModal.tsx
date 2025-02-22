@@ -36,7 +36,10 @@ const TaskManagementModal = () => {
     status: "",
     due_date: new Date(),
   });
-  const { isTaskModalOpen, taskId } = useSelector((state: any) => state.modal);
+  const { isTaskModalOpen, taskId } = useSelector(
+    (state: { modal: { isTaskModalOpen: boolean; taskId?: number } }) =>
+      state.modal
+  );
 
   const onChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -52,36 +55,37 @@ const TaskManagementModal = () => {
   const { data: taskDetail, isLoading } = useGetSingleTaskQuery(taskId, {
     skip: !taskId,
   });
-  const [createTask, { isLoading: createTaskIsLoading }] =
-    useCreateTaskMutation();
+  const [createTask] = useCreateTaskMutation();
 
-  const [
-    updateTask,
-    { isLoading: updateTaskIsLoading, isSuccess: updateTaskIsSuccess },
-  ] = useUpdateTaskMutation();
+  const [updateTask, { isLoading: updateTaskIsLoading }] =
+    useUpdateTaskMutation();
 
   // Handler for creating a Task
-  const handleCreateTask = async (e: { preventDefault: () => void }) => {
+  const handleCreateTask = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       await createTask(formvalue).unwrap();
       toast.success("Task Created succesfully!!");
       dispatch(offTaskModal(""));
-    } catch (err: any) {
-      toast.error(err?.data?.message || err.error);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        toast.error(err.message);
+      }
     }
   };
 
   // Handler for updating a Task
 
-  const handleUpdateTask = async (e: { preventDefault: () => void }) => {
+  const handleUpdateTask = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       await updateTask(formvalue).unwrap();
       toast.success("Task Updated succesfully!!");
       dispatch(offTaskModal(""));
-    } catch (err: any) {
-      toast.error(err?.data?.message || err.error);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        toast.error(err.message);
+      }
     }
   };
 

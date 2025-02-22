@@ -23,7 +23,7 @@ const LoginModal = () => {
     password: "",
     email: "",
   });
-  const [login, { isLoading, data: currentUser, isSuccess: loginIsSuccess }] =
+  const [login, { isLoading, data: currentUser,}] =
     useLoginMutation();
 
   const noEntry =
@@ -38,8 +38,10 @@ const LoginModal = () => {
       // console.log(data)
       dispatch(setUserCredentials({ user: data }));
       toast.success("Login Process succesfully!!");
-    } catch (err: any) {
-      toast.error(err?.data?.message || err.error);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        toast.error(err.message);
+      }
     }
   };
 
