@@ -4,7 +4,9 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 const Hero = () => {
   const dispatch = useDispatch();
-  const { currentUser } = useSelector((store:void) => store.auth);
+  const { currentUser } = useSelector(
+    (store: { auth: { currentUser?: { name: string } } | null }) => store.auth
+  );
 
   return (
     <div className="min-h-[100vh] py-12 lg:py-24 flex items-center gap-8 justify-center">
@@ -18,8 +20,8 @@ const Hero = () => {
           </h2>
           <span className="text-base lg:text-2xl text-[#777] font-normal lg:text-center max-w-[560px] md:max-w-[700px]">
             Effortlessly manage your tasks, track performance, and scale your
-            business—all in one place. Taskify gives you the tools to thrive
-            in the competitive world of productivity.
+            business—all in one place. Taskify gives you the tools to thrive in
+            the competitive world of productivity.
           </span>
           <div className="flex items-center">
             {currentUser ? (
